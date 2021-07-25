@@ -14,17 +14,19 @@ func fmtTime(t int64) string {
 }
 
 func fmtStat(stat *zk.Stat) string {
-	return fmt.Sprintf(`Czxid = 0x%x
-Ctime = %s
-Mzxid = 0x%x
-Mtime = %s
-Pzxid = 0x%x
-Cversion = %d
-Version = %d
-Aversion = %d
-EphemeralOwner = 0x%x
-DataLength = %d
-NumberChildren = %d`,
+	return fmt.Sprintf(`
+cZxid = 0x%x
+cTime = %s
+mZxid = 0x%x
+mtime = %s
+pZxid = 0x%x
+cversion = %d
+dataVersion = %d
+aclVersion = %d
+ephemeralOwner = 0x%x
+dataLength = %d
+numberChildren = %d
+`,
 		stat.Czxid,
 		fmtTime(stat.Ctime),
 		stat.Mzxid,

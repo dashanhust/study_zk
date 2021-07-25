@@ -50,7 +50,7 @@ func ParseCmd(cmd string) (name string, options []string) {
 			args = append(args, c)
 		}
 	}
-	if len(args) != 0 {
+	if len(args) == 0 {
 		return
 	}
 	return args[0], args[1:]

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,7 +8,8 @@ import (
 	"study_zk/core"
 
 	"github.com/c-bata/go-prompt"
-	"github.com/mitchellh/go-homedir"
+	homedir "github.com/mitchellh/go-homedir"
+	"github.com/namsral/flag"
 )
 
 var gitCommit = "unknown"
@@ -24,11 +24,13 @@ func main() {
 	showVersion := flag.Bool("version", false, "Show version info")
 	verboseLog := flag.Bool("v", false, "Set to true if want to enable zk log, useful for diagnose zk problems")
 	homePath, _ := homedir.Dir()
-	defaultConf := filepath.Join(homePath, ".config/zkcli.conf")
+	defaultConf := filepath.Join(homePath, "./go/src/study_zk/zkcli.conf")
 	if _, err := os.Stat(defaultConf); err != nil {
 		defaultConf = ""
 	}
 
+	fmt.Printf("homePaht: %s\nConfig file path: %s\n", homePath, defaultConf)
+	flag.String(flag.DefaultConfigFlagname, defaultConf, "path to config file")
 	flag.Parse()
 	args := flag.Args()
 
@@ -47,7 +49,7 @@ func main() {
 	}
 	conn, err := config.Connect()
 	if err != nil {
-		fmt.Println("%s", err)
+		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
 	defer conn.Close()
